@@ -147,7 +147,7 @@ function animated_parakeet_position() {
  */
 function animated_parakeet_close() {
 	$options = animated_parakeet_options( 'close' );
-	$value   = ( $options ? $options : '10' );
+	$value   = apply_filters( 'filter_animated_parakeet_close', ( $options ? $options : '10' ) );
 	echo '<div class="slidecontainer">';
 		echo '<input type="range" name="animated_parakeet_options[close]" min="0" max="100" value="' . esc_attr( $value ) . '" class="slider" id="animatedParakeetClose"><div id="closeDisplay"></div>';
 	echo '</div>';

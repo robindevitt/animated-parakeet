@@ -18,7 +18,7 @@ function options() {
 		'manage_options',
 		'animated-parakeet',
 		__NAMESPACE__ . '\animated_parakeet_content',
-		plugin_dir_url( __FILE__ ) . ( '../assets/images/moretyme-icon.png' ),
+		'dashicons-megaphone',
 		50
 	);
 

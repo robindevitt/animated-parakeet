@@ -1,0 +1,68 @@
+#animated-parakeed-product-notice{
+	width: 360px;
+	background-color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	box-shadow: 0px 0px 8px 3px rgba(59, 59, 59, 0.63);
+	-webkit-box-shadow: 0px 0px 8px 3px rgba(59, 59, 59, 0.63);
+	-moz-box-shadow: 0px 0px 8px 3px rgba(59, 59, 59, 0.63);
+	position: fixed;
+	top: 60px;
+	right: -100%;
+	padding: 20px;
+	box-sizing: border-box;
+	z-index: 999;
+	transition: all ease-in-out 0.5s;
+
+	&.active{
+		right: 60px;
+		transition: all ease-in-out 0.5s;
+	}
+
+	// Add to cart title style.
+	h5 {
+		width: 100%;
+		margin: 0px;
+		font-size: 16px;
+		text-transform: capitalize;
+		font-weight: normal;
+		margin-bottom: 10px;
+	}
+
+	// Image specific style.
+	img {
+		width: 100px;
+		height: auto;
+		margin-right: 15px;
+	}
+
+	.product-contents {
+		// Product title.
+		h6 {
+			margin: 0px;
+			text-transform: capitalize;
+		}
+
+		// Produict price.
+		p {
+			margin: 0px;
+		}
+	}
+
+	.button {
+		width: 100%;
+	}
+
+	// Close style.
+	#appn-closer {
+		width: 40px;
+		height: 40px;
+		text-align: center;
+		line-height: 40px;
+		position: absolute;
+		z-index: 9999;
+		right: 0px;
+		top: 0px;
+	}
+}

@@ -28,7 +28,7 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\action__plugin_activate' );
 add_action( 'admin_menu', __NAMESPACE__ . '\Settings\options' );
 add_action( 'admin_init', __NAMESPACE__ . '\Settings\settings' );
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\be__style_and_scripts', 99 );
-add_action( 'wp_footer', __NAMESPACE__ . '\fe__style_and_scripts' );
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\fe__style_and_scripts' );
 
 /**
  * WooCommerce Deactivated Notice.
@@ -49,7 +49,7 @@ function action__plugin_activate() {
 function be__style_and_scripts() {
 	$current_page = get_current_screen()->base;
 	if ( 'toplevel_page_animated-parakeet' === $current_page && is_admin() ) {
-		wp_enqueue_script( 'animated-parakeet-be-script', plugins_url( '/assets/js/animated-parakeet-be.min.js', __FILE__ ), array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
+		wp_enqueue_script( 'animated-parakeet-be-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-be.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
 	}
 }
 
@@ -58,5 +58,13 @@ function be__style_and_scripts() {
  */
 function fe__style_and_scripts() {
 	// TODO! Check if the condition is met to shoW!!
-	wp_enqueue_script( 'animated-parakeet-fe-script', plugins_url( '/assets/js/animated-parakeet-fe.min.js', __FILE__ ), array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
+	wp_enqueue_style( 'animated-parakeet-fe--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
+	wp_enqueue_script( 'animated-parakeet-fe-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-fe.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
+	wp_localize_script(
+		'animated-parakeet-fe-script',
+		'apvars',
+		array(
+			'woo_cart_url' => wc_get_cart_url(),
+		)
+	);
 }

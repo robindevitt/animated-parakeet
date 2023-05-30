@@ -31,10 +31,6 @@ function settings() {
 	register_setting(
 		'animated_parakeet_settings',
 		'animated_parakeet_options',
-		array(
-			'type'              => 'string',
-			'sanitize_callback' => 'validate_options',
-		)
 	);
 	animated_parakeet_settings();
 }
@@ -73,7 +69,7 @@ function animated_parakeet_content() {
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
 
-		echo '<form class="row" action="options.php" method="post">';
+		echo '<form id="admin-animated-parakeet" class="row" action="options.php" method="post">';
 			settings_fields( 'animated_parakeet_settings' );
 			do_settings_sections( 'animated_parakeet_settings' );
 			submit_button( 'Save Settings' );
@@ -134,13 +130,20 @@ function animated_parakeet_options( $option = '' ) {
  *
  */
 function animated_parakeet_layout() {
-
+	$options = animated_parakeet_options( 'layout' );
+	$checked = ( $options ? 'checked' : '' );
+	echo '<div class="animated-parakeet-layout-checkbox">';
+		echo '<input type="checkbox" ' . esc_attr( $checked ) . ' name="animated_parakeet_options[layout]" id="ap_layout">';
+		echo '<label for="ap_layout"><span class="default">Default</span><span class="background">Background</span></label>';
+	echo '</div>';
 }
 /**
  *
  */
 function animated_parakeet_position() {
-
+	$options = animated_parakeet_options( 'position' );
+	$checked = ( $options ? 'checked' : '' );
+	echo '<div class="animated-parakeet-position-checkbox"><input type="checkbox" ' . esc_attr( $checked ) . ' name="animated_parakeet_options[position]" id="ap_position"><label for="ap_position"><span class="top">Top</span><span class="bottom">Bottom</span></div>';
 }
 /**
  *

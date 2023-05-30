@@ -16,6 +16,8 @@
 
 namespace AnimatedParakeet;
 
+use AnimatedParakeet\Settings;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -50,6 +52,7 @@ function be__style_and_scripts() {
 	$current_page = get_current_screen()->base;
 	if ( 'toplevel_page_animated-parakeet' === $current_page && is_admin() ) {
 		wp_enqueue_script( 'animated-parakeet-be-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-be.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
+		wp_enqueue_style( 'animated-parakeet-be--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-be.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
 	}
 }
 
@@ -58,13 +61,15 @@ function be__style_and_scripts() {
  */
 function fe__style_and_scripts() {
 	// TODO! Check if the condition is met to shoW!!
-	wp_enqueue_style( 'animated-parakeet-fe--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
+	wp_enqueue_style( 'animated-parakeet-fe--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-fe.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
 	wp_enqueue_script( 'animated-parakeet-fe-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-fe.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
 	wp_localize_script(
 		'animated-parakeet-fe-script',
 		'apvars',
 		array(
 			'woo_cart_url' => wc_get_cart_url(),
+			'position'     => ( Settings\animated_parakeet_options( 'position' ) ? 'bottom' : 'top' ),
+			'layout'       => ( Settings\animated_parakeet_options( 'layout' ) ? 'background' : 'default' ),
 		)
 	);
 }

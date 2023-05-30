@@ -61,7 +61,8 @@ function be__style_and_scripts() {
  */
 function fe__style_and_scripts() {
 	// TODO! Check if the condition is met to shoW!!
-	$closevalue = Settings\animated_parakeet_options( 'close' );
+	$optionvalues = Settings\animated_parakeet_options();
+
 	wp_enqueue_style( 'animated-parakeet-fe--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-fe.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
 	wp_enqueue_script( 'animated-parakeet-fe-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-fe.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
 	wp_localize_script(
@@ -69,9 +70,9 @@ function fe__style_and_scripts() {
 		'apvars',
 		array(
 			'woo_cart_url' => wc_get_cart_url(),
-			'position'     => ( Settings\animated_parakeet_options( 'position' ) ? 'bottom' : 'top' ),
-			'layout'       => ( Settings\animated_parakeet_options( 'layout' ) ? 'background' : 'default' ),
-			'close'        => apply_filters( 'filter_animated_parakeet_close', ( $closevalue ? $closevalue : '10' ) ),
+			'position'     => ( isset( $optionvalues['position'] ) ? 'bottom' : 'top' ),
+			'layout'       => ( isset( $optionvalues['layput'] ) ? 'background' : 'default' ),
+			'close'        => apply_filters( 'filter_animated_parakeet_close', ( isset( $optionvalues['close'] ) ? $optionvalues['close'] : '10' ) ),
 		)
 	);
 }

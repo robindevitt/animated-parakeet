@@ -12,3 +12,22 @@ output.innerHTML = slider.value + ' seconds'; // Display the default slider valu
 slider.oninput = function () {
 	output.innerHTML = this.value + ' seconds';
 }
+
+jQuery(document).ready(function ($) {
+	// Add display condition
+	$('#add-condition').on('click', function (e) {
+		e.preventDefault();
+
+		var condition = $('.display-condition:last').clone();
+		condition.find('select').val('');
+		$('#display-conditions').append(condition);
+	});
+
+	// Remove display condition
+	$(document).on('click', '.remove-condition', function (e) {
+		e.preventDefault();
+		if (jQuery('div.display-condition').size() > 1) {
+			$(this).closest('.display-condition').remove();
+		}
+	});
+});

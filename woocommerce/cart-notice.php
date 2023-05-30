@@ -21,7 +21,11 @@ add_filter( 'woocommerce_loop_add_to_cart_args', __NAMESPACE__ . '\filter_woocom
 function filter_woocommerce_loop_add_to_cart_args( $args, $product ) {
 	$args['attributes']['data-product_name']  = $product->get_name();
 	$args['attributes']['data-product_price'] = wp_strip_all_tags( wc_price( $product->get_price() ) );
-	$args['attributes']['data-product_image'] = wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' )[0];
+	$args['attributes']['data-product_image'] = (
+		$product->get_image_id() // Check the product has an image id.
+		? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' )[0] // Get the image source.
+		: wc_placeholder_img_src() // If no image, get the default placeholder image.
+	);
 	return $args;
 }
 
@@ -36,7 +40,7 @@ function filter_woocommerce_loop_add_to_cart_args( $args, $product ) {
  * @param array  $cart_item_data – The cart item data.
  */
 function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
-	// Trigger the AJAX request
+	// Trigger the AJAX request.
 	wp_remote_post(
 		admin_url( 'admin-ajax.php' ),
 		array(

@@ -21,7 +21,15 @@ jQuery(document).ready(function ($) {
 		// Show the popup.
 		setTimeout(function () {
 			$('#animated-parakeed-product-notice').addClass("active")
-		}, 100);
+		}, 10);
+
+		// Remove the banner after the time specified by the user.
+		setTimeout(function () {
+			if ($('#animated-parakeed-product-notice').length > 0) {
+				$('#animated-parakeed-product-notice').remove();
+			}
+		}, ( apvars.close * 1000 ) );
+
 	});
 });
 

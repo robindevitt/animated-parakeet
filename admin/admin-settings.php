@@ -174,7 +174,7 @@ function animated_parakeet_display() {
 		),
 		'option' => array(
 			'value'     => true,
-			'selectted' => true,
+			'selected' => true,
 			'value'     => true,
 		),
 		'span'   => array(
@@ -184,12 +184,12 @@ function animated_parakeet_display() {
 
 	$options = animated_parakeet_options( 'display' );
 	echo '<div id="display-conditions">';
-		if ( $options && 1 < count( $options ) ) { //phpcs:ignore
+		if ( $options && 0 < count( $options ) ) { //phpcs:ignore
 		foreach ( $options as $key => $value ) { //phpcs:ignore
 			echo wp_kses( render__display_condition( $value ), $allowed_html );
 			} //phpcs:ignore
 		} else { //phpcs:ignore
-		echo wp_kses( render__display_condition(), $allowed_html );
+			echo wp_kses( render__display_condition(), $allowed_html );
 		} //phpcs:ignore
 	echo '</div>';
 	echo '<button id="add-condition">' . esc_html( 'Add Display Condition' ) . '</button>';
@@ -207,9 +207,7 @@ function render__display_condition( $selectedvalue = '' ) {
 		$rdc .= '</select>'; //phpcs:ignore
 		$rdc .= '<span class="remove-condition dashicons dashicons-trash"></span>'; //phpcs:ignore
 	$rdc .= '</div>'; //phpcs:ignore
-
 	return $rdc;
-
 }
 
 /**
@@ -231,7 +229,7 @@ function render__display_condition_options( $selectedvalue ) {
 	$options = '';
 	foreach ( $optionarray as $key => $value ) {
 		$select   = ( $selectedvalue === $key ? 'selected' : '' );
-		$options .= '<option ' . $select . ' value="' . $key . '">' . $value . '</option>';
+		$options .= '<option value="' . $key . '" ' . $select . '>' . $value . '</option>';
 	}
 	return $options;
 }

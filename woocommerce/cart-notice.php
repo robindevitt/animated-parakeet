@@ -133,7 +133,7 @@ function render__product( $product_id, $optionvalues ) {
 
 		$html .= '</div>'; // End .product-contents.
 
-		$html .= '<a class="button" href="' . wc_get_cart_url() . '">' . esc_html( 'View Cart' ) . '</a>';
+		$html .= '<a class="button wp-block-button__link" href="' . wc_get_cart_url() . '">' . esc_html( 'View Cart' ) . '</a>';
 
 	$html .= '</div>'; // End .product-notice-wrapper.
 

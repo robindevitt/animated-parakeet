@@ -40,7 +40,6 @@ function action__plugin_activate() {
 		/* translators: %s: WooCommerce link */
 		echo '<div class="error"><p>' . sprintf( esc_html__( 'Animated Parakeet requires %s to be installed and active.', 'animated-parakeet' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</p></div>';
 	}
-
 	require_once 'admin/admin-settings.php';
 	require_once 'woocommerce/cart-notice.php';
 }
@@ -60,19 +59,51 @@ function be__style_and_scripts() {
  * Frontend Scripts and Styles.
  */
 function fe__style_and_scripts() {
-	// TODO! Check if the condition is met to shoW!!
 	$optionvalues = Settings\animated_parakeet_options();
+	if ( action__display_options( $optionvalues['display'] ) ) {
+		wp_enqueue_style( 'animated-parakeet-fe--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-fe.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
+		wp_enqueue_script( 'animated-parakeet-fe-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-fe.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
+		wp_localize_script(
+			'animated-parakeet-fe-script',
+			'apvars',
+			array(
+				'woo_cart_url' => wc_get_cart_url(),
+				'position'     => ( isset( $optionvalues['position'] ) ? 'bottom' : 'top' ),
+				'layout'       => ( isset( $optionvalues['layput'] ) ? 'background' : 'default' ),
+				'close'        => apply_filters( 'filter_animated_parakeet_close', ( isset( $optionvalues['close'] ) ? $optionvalues['close'] : '10' ) ),
+			)
+		);
+	}
+}
 
-	wp_enqueue_style( 'animated-parakeet-fe--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-fe.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
-	wp_enqueue_script( 'animated-parakeet-fe-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-fe.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
-	wp_localize_script(
-		'animated-parakeet-fe-script',
-		'apvars',
-		array(
-			'woo_cart_url' => wc_get_cart_url(),
-			'position'     => ( isset( $optionvalues['position'] ) ? 'bottom' : 'top' ),
-			'layout'       => ( isset( $optionvalues['layput'] ) ? 'background' : 'default' ),
-			'close'        => apply_filters( 'filter_animated_parakeet_close', ( isset( $optionvalues['close'] ) ? $optionvalues['close'] : '10' ) ),
-		)
-	);
+/**
+ * Determine if the Display options are met.
+ *
+ * @param array $displayoptions Array of the stored display options.
+ */
+function action__display_options( $displayoptions = array() ) {
+
+	if ( empty( $displayoptions ) ) {
+		return false;
+	}
+
+	$is_pages          = ( is_woocommerce() || is_cart() || is_checkout() && in_array( 'pages', $displayoptions, true ) );
+	$is_shop_archive   = ( is_shop() && in_array( 'shoparchive', $displayoptions, true ) );
+	$is_product_cat    = ( is_product_category() && in_array( 'productcategories', $displayoptions, true ) );
+	$is_product_tags   = ( is_product_tag() && in_array( 'producttags', $displayoptions, true ) );
+	$is_product_attr   = ( ( is_product_taxonomy() & is_tax() ) && in_array( 'productattributes', $displayoptions, true ) );
+	$is_product_single = ( is_product() && in_array( 'productsingle', $displayoptions, true ) );
+
+	// Check the values and return.
+	switch ( true ) {
+		case $is_pages:
+		case $is_shop_archive:
+		case $is_product_cat:
+		case $is_product_tags:
+		case $is_product_attr:
+		case $is_product_single:
+			return true;
+		default:
+			return false;
+	}
 }

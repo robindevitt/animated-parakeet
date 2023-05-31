@@ -52,19 +52,6 @@ function animated_parakeet_content() {
 	// show error/update messages.
 	settings_errors( 'animated_parakeet_message' );
 
-	// Setup the allowed HTML so scripts and dics are rendered.
-	$allowed_html = array(
-		'div'    => array(
-			'class' => true,
-			'id'    => true,
-		),
-		'script' => array(
-			'async' => true,
-			'src'   => true,
-			'type'  => 'text/javascript',
-		),
-	);
-
 	echo '<div class="wrap">';
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
@@ -107,7 +94,7 @@ function animated_parakeet_settings() {
 }
 
 /**
- * Get Animated Parakeet Options
+ * Get Animated Parakeet Options.
  *
  * @param string $option Define the option to return.
  *
@@ -126,7 +113,7 @@ function animated_parakeet_options( $option = '' ) {
 }
 
 /**
- * Display the option for the layout setting,
+ * Display the option for the layout setting.
  */
 function animated_parakeet_layout() {
 	$options = animated_parakeet_options( 'layout' );
@@ -173,9 +160,9 @@ function animated_parakeet_display() {
 			'name'   => true,
 		),
 		'option' => array(
-			'value'     => true,
+			'value'    => true,
 			'selected' => true,
-			'value'     => true,
+			'value'    => true,
 		),
 		'span'   => array(
 			'class' => true,
@@ -185,8 +172,8 @@ function animated_parakeet_display() {
 	$options = animated_parakeet_options( 'display' );
 	echo '<div id="display-conditions">';
 		if ( $options && 0 < count( $options ) ) { //phpcs:ignore
-		foreach ( $options as $key => $value ) { //phpcs:ignore
-			echo wp_kses( render__display_condition( $value ), $allowed_html );
+			foreach ( $options as $key => $value ) { //phpcs:ignore
+				echo wp_kses( render__display_condition( $value ), $allowed_html );
 			} //phpcs:ignore
 		} else { //phpcs:ignore
 			echo wp_kses( render__display_condition(), $allowed_html );

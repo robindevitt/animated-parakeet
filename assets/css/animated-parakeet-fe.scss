@@ -11,7 +11,7 @@
 	right: -100%;
 	padding: 20px;
 	box-sizing: border-box;
-	z-index: 99999;
+	z-index: 9999999; // High number to go over the wp-admin bar.
 	transition: all ease-in-out 0.5s;
 	background-position: center;
 	background-size: contain;

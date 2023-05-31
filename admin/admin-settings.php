@@ -120,7 +120,7 @@ function animated_parakeet_layout() {
 	$checked = ( $options ? 'checked' : '' );
 	echo '<div class="animated-parakeet-layout-checkbox">';
 		echo '<input type="checkbox" ' . esc_attr( $checked ) . ' name="animated_parakeet_options[layout]" id="ap_layout">';
-		echo '<label for="ap_layout"><span class="default">' . esc_html( 'Defaukt' ) . '</span><span class="background">' . esc_html( 'Background' ) . '</span></label>';
+		echo '<label for="ap_layout"><span class="default">' . esc_html( 'Default' ) . '</span><span class="background">' . esc_html( 'Background' ) . '</span></label>';
 	echo '</div>';
 }
 /**
@@ -129,7 +129,7 @@ function animated_parakeet_layout() {
 function animated_parakeet_position() {
 	$options = animated_parakeet_options( 'position' );
 	$checked = ( $options ? 'checked' : '' );
-	echo '<div class="animated-parakeet-position-checkbox"><input type="checkbox" ' . esc_attr( $checked ) . ' name="animated_parakeet_options[position]" id="ap_position"><label for="ap_position"><span class="top"></span><span class="bottom"></span></div>';
+	echo '<div class="animated-parakeet-position-checkbox"><input type="checkbox" ' . esc_attr( $checked ) . ' name="animated_parakeet_options[position]" id="ap_position"><label for="ap_position"><span class="top">' . esc_html( 'Top' ) . '</span><span class="bottom">' . esc_html( 'Bottom' ) . '</span></div>';
 }
 /**
  * Display the option for the close setting,
@@ -204,19 +204,19 @@ function render__display_condition( $selectedvalue = '' ) {
  */
 function render__display_condition_options( $selectedvalue ) {
 	$optionarray = array(
-		''                  => __( 'Please select', 'animated-parakeet' ),
-		'pages'             => __( 'All Pages', 'animated-parakeet' ),
-		'shoparchive'       => __( 'Shop Archive', 'animated-parakeet' ),
-		'productcategories' => __( 'Product Categories', 'animated-parakeet' ),
-		'producttags'       => __( 'Product Tags', 'animated-parakeet' ),
-		'productattributes' => __( 'Product Attributes', 'animated-parakeet' ),
-		'productsingle'     => __( 'Single Products', 'animated-parakeet' ),
+		''                  => 'Please select',
+		'pages'             => 'All Pages',
+		'shoparchive'       => 'Shop Archive',
+		'productcategories' => 'Product Categories',
+		'producttags'       => 'Product Tags',
+		'productattributes' => 'Product Attributes',
+		'productsingle'     => 'Single Products',
 	);
 
 	$options = '';
 	foreach ( $optionarray as $key => $value ) {
 		$select   = ( $selectedvalue === $key ? 'selected' : '' );
-		$options .= '<option value="' . $key . '" ' . $select . '>' . $value . '</option>';
+		$options .= '<option value="' . $key . '" ' . $select . '>' . esc_html( $value ) . '</option>';
 	}
 	return $options;
 }

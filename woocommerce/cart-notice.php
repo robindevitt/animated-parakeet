@@ -104,7 +104,7 @@ function render__product( $product_id, $optionvalues ) {
 
 	$html  = '<div id="animated-parakeed-product-notice" class="' . $position . ' active" ' . $style . '>'; // Open .product-notice-wrapper.
 	$html .= '<span id="appn-closer" class="dashicons dashicons-no"></span>';
-	$html .= '<h5>' . esc_html__( 'Addeded To Cart', 'animated-parakeet' ) . '</h5>';
+	$html .= '<h5>' . esc_html( 'Addeded To Cart' ) . '</h5>';
 
 		// Setup the image if it's enabled in the settings.
 		if ( 'default' === $layout ) { // phpcs:ignore

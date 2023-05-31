@@ -51,12 +51,19 @@ function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $var
 	if ( $is_product_single ) {
 		// Setup the allowed HTML so scripts and dics are rendered.
 		$allowed_html = array(
+			'h6'     => array(),
+			'h5'     => array(),
+			'a'      => array(
+				'href'  => true,
+				'class' => true,
+			),
 			'button' => array(
 				'id' => true,
 			),
 			'div'    => array(
 				'class' => true,
 				'id'    => true,
+				'style' => true,
 			),
 			'select' => array(
 				'option' => true,
@@ -69,6 +76,14 @@ function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $var
 			),
 			'span'   => array(
 				'class' => true,
+				'id'    => true,
+			),
+			'p'      => array(
+				'strong' => true,
+			),
+			'img'    => array(
+				'class' => true,
+				'src'   => true,
 			),
 		);
 		// Render thep notice.
@@ -98,6 +113,7 @@ function render__product( $product_id, $optionvalues ) {
 	);
 
 	$style = '';
+
 	if ( 'background' === $layout ) {
 		$style = 'style="background-image: url(' . $image_url . ' );"';
 	}

@@ -97,6 +97,7 @@ function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $var
  *
  * @param int   $product_id Product ID.
  * @param array $optionvalues Option display values.
+ * @param int   $quantity Product QTY being added to the cart.
  *
  * @return string $html HTML is returned.
  */

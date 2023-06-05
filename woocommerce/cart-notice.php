@@ -48,7 +48,7 @@ function filter_woocommerce_loop_add_to_cart_args( $args, $product ) {
 function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
 	$optionvalues = Settings\animated_parakeet_options();
 
-	$is_product_single = ( 'product' === get_post_type( $product_id ) ) && in_array( 'productsingle', $optionvalues['display'], true );
+	$is_product_single = ( 'product' === get_post_type( get_queried_object_id() ) ) && in_array( 'productsingle', $optionvalues['display'], true );
 	if ( $is_product_single ) {
 		// Setup the allowed HTML so scripts and dics are rendered.
 		$allowed_html = array(

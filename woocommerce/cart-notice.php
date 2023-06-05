@@ -46,7 +46,8 @@ function filter_woocommerce_loop_add_to_cart_args( $args, $product ) {
  * @param array  $cart_item_data – The cart item data.
  */
 function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
-	$optionvalues      = Settings\animated_parakeet_options();
+	$optionvalues = Settings\animated_parakeet_options();
+
 	$is_product_single = ( 'product' === get_post_type( $product_id ) ) && in_array( 'productsingle', $optionvalues['display'], true );
 	if ( $is_product_single ) {
 		// Setup the allowed HTML so scripts and dics are rendered.
@@ -87,7 +88,7 @@ function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $var
 			),
 		);
 		// Render thep notice.
-		echo wp_kses( render__product( ( $variation_id ? $variation_id : $product_id ), $optionvalues ), $allowed_html );
+		echo wp_kses( render__product( ( $variation_id ? $variation_id : $product_id ), $optionvalues, $quantity ), $allowed_html );
 	}
 }
 
@@ -99,7 +100,7 @@ function add__added_to_cart_notice( $cart_item_key, $product_id, $quantity, $var
  *
  * @return string $html HTML is returned.
  */
-function render__product( $product_id, $optionvalues ) {
+function render__product( $product_id, $optionvalues, $quantity = 1 ) {
 
 	$position = ( isset( $optionvalues['position'] ) ? 'bottom' : 'top' );
 	$layout   = ( isset( $optionvalues['layput'] ) ? 'background' : 'default' );
@@ -129,6 +130,7 @@ function render__product( $product_id, $optionvalues ) {
 		$html .= '<div class="product-contents">'; // Open .product-contents.
 
 			$html .= '<h6>' . esc_html( $product->get_name() ) . '</h6>';
+			$html .= '<p><strong>' . esc_html__( 'Quantity' ) . ':</strong> ' . $quantity . '</p>';
 			$html .= '<p><strong>' . esc_html__( 'Price' ) . ':</strong> ' . wc_price( $product->get_price() ) . '</p>';
 
 		$html .= '</div>'; // End .product-contents.

@@ -92,7 +92,7 @@ function action__display_options( $displayoptions = array() ) {
 	$is_product_cat    = ( is_product_category() && in_array( 'productcategories', $displayoptions, true ) );
 	$is_product_tags   = ( is_product_tag() && in_array( 'producttags', $displayoptions, true ) );
 	$is_product_attr   = ( ( is_product_taxonomy() & is_tax() ) && in_array( 'productattributes', $displayoptions, true ) );
-	$is_product_single = ( ( 'product' === get_post_type( get_queried_object_id() ) ) && in_array( 'productsingle', $displayoptions, true ) );
+	$is_product_single = ( 'product' === get_post_type( get_queried_object_id() ) ) && in_array( 'productsingle', $displayoptions, true );
 
 	// Check the values and return.
 	switch ( true ) {

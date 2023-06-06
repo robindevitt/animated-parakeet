@@ -1,4 +1,4 @@
-// Make use of WooCommerce 'added_to_cart' event for ajax events.
+// Make use of WooCommerce 'adding_to_cart' event for ajax events.
 jQuery(document).on('adding_to_cart', function (event, fragments, product ) {
 	// Remove existing notices.
 	jQuery('#animated-parakeed-product-notice').remove();

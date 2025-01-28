@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ANIMIATED_PARAKEET_VER', '1.0.1' );
+define( 'ANIMIATED_PARAKEET_VER', '2.0.0' );
 define( 'ANIMIATED_PARAKEET_URL', plugin_dir_url( __FILE__ ) );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\action__plugin_activate' );

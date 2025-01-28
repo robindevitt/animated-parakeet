@@ -8,14 +8,8 @@ jQuery(document).on('adding_to_cart', function (event, fragments, product ) {
 	var productPrice = product.product_price;
 	var productImage = product.product_image;
 
-	if (apvars.layput = 'background') {
-		// Add the html for the background layput.
-		var style = 'style="background-image: url(' + productImage + ' );"';
-		jQuery('body').append('<div id="animated-parakeed-product-notice" ' + style + ' class="' + apvars.position + '"><div id="appn-overlay"></div><span id="appn-closer" class="dashicons dashicons-no"></span><h5>Addeded To Cart</h5><div class="product-contents"><h6>' + productTitle + '</h6><p><strong>Price:</strong> ' + productPrice + '</p></div><a class="button wp-block-button__link" href="' + apvars.woo_cart_url + '">View Cart</a></div>');
-	} else {
-		// Add the html for the default layput.
-		jQuery('body').append('<div id="animated-parakeed-product-notice" class="' + apvars.position + '"><span id="appn-closer" class="dashicons dashicons-no"></span><h5>Addeded To Cart</h5><img src="' + productImage + '"/><div class="product-contents"><h6>' + productTitle + '</h6><p><strong>Price:</strong> ' + productPrice + '</p></div><a class="button wp-block-button__link" href="' + apvars.woo_cart_url + '">View Cart</a></div>');
-	}
+	// Add the html.
+	jQuery('body').append('<div id="animated-parakeed-product-notice" class="' + apvars.position + '"><span id="appn-closer" class="dashicons dashicons-no"></span><h5>Added To Cart</h5><img src="' + productImage + '"/><div class="product-contents"><h6>' + productTitle + '</h6><p><strong>Price:</strong> ' + productPrice + '</p></div><a class="button wp-block-button__link" href="' + apvars.woo_cart_url + '">View Cart</a></div>');
 
 	// Show the popup.
 	setTimeout(function () {
@@ -32,6 +26,6 @@ jQuery(document).on('adding_to_cart', function (event, fragments, product ) {
 });
 
 // Hide the popup when the user closes it.
-jQuery(document).on('click', '#appn-closer', function (jQuery) {
-	jQuery('#animated-parakeed-product-notice').removeClass('active');
+jQuery(document).on('click', '#appn-closer', function () {
+	jQuery("#animated-parakeed-product-notice").removeClass("active");
 });

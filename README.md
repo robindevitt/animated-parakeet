@@ -4,10 +4,11 @@ This plugin works with WooCommerce and very specifically around adding products 
 When adding a product to the cart there is a notificaiton with a popup and it contians the product details.
 
 There is an admin settings page with a few options that contain the following options:
-1. Layout - Choose the layout you prefer: Image Grid or Image Background.
-2. Position - Top or Bottom
-3. Close - Select howmany seconds until the popup closes.
-4. Display Conditions - Select which pages you want the notification to show on.
+1. Position - Top or Bottom
+2. Close - Select howmany seconds until the popup closes.
+3. Display Conditions - Select which pages you want the notification to show on.
+4. Background and text colour
+5. Button Background and text colour
 
 There is also a filter that allows you to set the value of the "Close". This filter is with the following snippet and it can be added to your functions.php file in your theme. Using the filter will override the value that is set in the admin settings page.
 

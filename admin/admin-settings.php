@@ -21,7 +21,6 @@ function options() {
 		'dashicons-megaphone',
 		50
 	);
-
 }
 
 /**
@@ -76,10 +75,13 @@ function animated_parakeet_settings() {
 	);
 
 	$settings = array(
-		'\animated_parakeet_layout'   => 'Layout',
-		'\animated_parakeet_position' => 'Position',
-		'\animated_parakeet_close'    => 'Close after (seconds)',
-		'\animated_parakeet_display'  => 'Display',
+		'\animated_parakeet_position'        => 'Position',
+		'\animated_parakeet_close'           => 'Close after (seconds)',
+		'\animated_parakeet_display'         => 'Display',
+		'\animated_parakeet_bkg_colour'      => 'Background Colour',
+		'\animated_parakeet_text_colour'     => 'Text Colour',
+		'\animated_parakeet_btn_bkg_colour'  => 'Button Background Colour',
+		'\animated_parakeet_btn_text_colour' => 'Button Text Colour',
 	);
 
 	foreach ( $settings as $key => $value ) {
@@ -96,47 +98,35 @@ function animated_parakeet_settings() {
 /**
  * Get Animated Parakeet Options.
  *
- * @param string $option Define the option to return.
- *
  * @return array
  */
-function animated_parakeet_options( $option = '' ) {
+function animated_parakeet_options() {
 	$options = get_option( 'animated_parakeet_options' );
-	if ( ! empty( $option ) ) {
-		if ( isset( $options[ $option ] ) ) {
-			return $options[ $option ];
-		} else {
-			return false;
-		}
-	}
-	return $options;
+	return array(
+		'close'      => ( isset( $options['close'] ) ? $options['close'] : '10' ),
+		'position'   => ( isset( $options['position'] ) ? 'bottom' : 'top' ),
+		'display'    => ( isset( $options['display'] ) ? $options['display'] : array() ),
+		'background' => ( isset( $options['background'] ) ? $options['background'] : '' ),
+		'text'       => ( isset( $options['text'] ) ? $options['text'] : '' ),
+		'buttonbkg'  => ( isset( $options['buttonbkg'] ) ? $options['buttonbkg'] : '' ),
+		'buttontext' => ( isset( $options['buttontext'] ) ? $options['buttontext'] : '' ),
+	);
 }
 
-/**
- * Display the option for the layout setting.
- */
-function animated_parakeet_layout() {
-	$options = animated_parakeet_options( 'layout' );
-	$checked = ( $options ? 'checked' : '' );
-	echo '<div class="animated-parakeet-layout-checkbox">';
-		echo '<input type="checkbox" ' . esc_attr( $checked ) . ' name="animated_parakeet_options[layout]" id="ap_layout">';
-		echo '<label for="ap_layout"><span class="default">' . esc_html( 'Default' ) . '</span><span class="background">' . esc_html( 'Background' ) . '</span></label>';
-	echo '</div>';
-}
 /**
  * Display the option for the position setting,
  */
 function animated_parakeet_position() {
-	$options = animated_parakeet_options( 'position' );
-	$checked = ( $options ? 'checked' : '' );
+	$options = animated_parakeet_options();
+	$checked = ( 'bottom' === $options['position'] ? 'checked' : '' );
 	echo '<div class="animated-parakeet-position-checkbox"><input type="checkbox" ' . esc_attr( $checked ) . ' name="animated_parakeet_options[position]" id="ap_position"><label for="ap_position"><span class="top">' . esc_html( 'Top' ) . '</span><span class="bottom">' . esc_html( 'Bottom' ) . '</span></div>';
 }
 /**
  * Display the option for the close setting,
  */
 function animated_parakeet_close() {
-	$options = animated_parakeet_options( 'close' );
-	$value   = apply_filters( 'filter_animated_parakeet_close', ( $options ? $options : '10' ) );
+	$options = animated_parakeet_options();
+	$value   = apply_filters( 'filter_animated_parakeet_close', ( $options['close'] ? $options['close'] : '10' ) );
 	echo '<div class="slidecontainer">';
 		echo '<input type="range" name="animated_parakeet_options[close]" min="0" max="100" value="' . esc_attr( $value ) . '" class="slider" id="animatedParakeetClose"><div id="closeDisplay"></div>';
 	echo '</div>';
@@ -162,17 +152,16 @@ function animated_parakeet_display() {
 		'option' => array(
 			'value'    => true,
 			'selected' => true,
-			'value'    => true,
 		),
 		'span'   => array(
 			'class' => true,
 		),
 	);
 
-	$options = animated_parakeet_options( 'display' );
+	$options = animated_parakeet_options();
 	echo '<div id="display-conditions">';
-		if ( $options && 0 < count( $options ) ) { //phpcs:ignore
-			foreach ( $options as $key => $value ) { //phpcs:ignore
+		if ( $options['display'] && 0 < count( $options['display'] ) ) { //phpcs:ignore
+			foreach ( $options['display'] as $key => $value ) { //phpcs:ignore
 				echo wp_kses( render__display_condition( $value ), $allowed_html );
 			} //phpcs:ignore
 		} else { //phpcs:ignore
@@ -180,6 +169,42 @@ function animated_parakeet_display() {
 		} //phpcs:ignore
 	echo '</div>';
 	echo '<button id="add-condition">' . esc_html( 'Add Display Condition' ) . '</button>';
+}
+
+/**
+ * Display the option for the background colour setting.
+ */
+function animated_parakeet_bkg_colour() {
+	$options = animated_parakeet_options();
+	$default = ( isset( $options['background'] ) ? $options['background'] : '' );
+	echo '<input name="animated_parakeet_options[background]" class="animated-parakeeet-color-field" type="text" value="' . esc_attr( $default ) . '" data-default-color="" />';
+}
+
+/**
+ * Display the option for the background colour setting.
+ */
+function animated_parakeet_text_colour() {
+	$options = animated_parakeet_options();
+	$default = ( isset( $options['text'] ) ? $options['text'] : '' );
+	echo '<input name="animated_parakeet_options[text]" class="animated-parakeeet-color-field" type="text" value="' . esc_attr( $default ) . '" data-default-color="" />';
+}
+
+/**
+ * Display the option for the background colour setting.
+ */
+function animated_parakeet_btn_bkg_colour() {
+	$options = animated_parakeet_options();
+	$default = ( isset( $options['buttonbkg'] ) ? $options['buttonbkg'] : '' );
+	echo '<input name="animated_parakeet_options[buttonbkg]" class="animated-parakeeet-color-field" type="text" value="' . esc_attr( $default ) . '" data-default-color="" />';
+}
+
+/**
+ * Display the option for the background colour setting.
+ */
+function animated_parakeet_btn_text_colour() {
+	$options = animated_parakeet_options();
+	$default = ( isset( $options['buttontext'] ) ? $options['buttontext'] : '' );
+	echo '<input name="animated_parakeet_options[buttontext]" class="animated-parakeeet-color-field" type="text" value="' . esc_attr( $default ) . '" data-default-color="" />';
 }
 
 /**

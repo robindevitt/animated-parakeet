@@ -30,4 +30,6 @@ jQuery(document).ready(function ($) {
 			$(this).closest('.display-condition').remove();
 		}
 	});
+
+    $('.animated-parakeeet-color-field').wpColorPicker();
 });

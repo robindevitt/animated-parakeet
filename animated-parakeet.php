@@ -3,7 +3,7 @@
  * Plugin Name: Animated Parakeet
  * Plugin URI: https://github.com/robindevitt/animated-parakeet
  * Description: A custom developed plugin for add to cart notificaitons.
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: Robin Devitt
  * Author URI: https://github.com/robindevitt
  * License: GPLv3 or later
@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ANIMIATED_PARAKEET_VER', '1.0.0' );
+define( 'ANIMIATED_PARAKEET_VER', '1.0.1' );
 define( 'ANIMIATED_PARAKEET_URL', plugin_dir_url( __FILE__ ) );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\action__plugin_activate' );
@@ -50,8 +50,8 @@ function action__plugin_activate() {
 function be__style_and_scripts() {
 	$current_page = get_current_screen()->base;
 	if ( 'toplevel_page_animated-parakeet' === $current_page && is_admin() ) {
-		wp_enqueue_script( 'animated-parakeet-be-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-be.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
-		wp_enqueue_style( 'animated-parakeet-be--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-be.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
+		wp_enqueue_script( 'animated-parakeet-be-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-be.min.js', array( 'jquery', 'wp-color-picker' ), ANIMIATED_PARAKEET_VER, true );
+		wp_enqueue_style( 'animated-parakeet-be-style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-be.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
 	}
 }
 
@@ -61,18 +61,43 @@ function be__style_and_scripts() {
 function fe__style_and_scripts() {
 	$optionvalues = Settings\animated_parakeet_options();
 	if ( action__display_options( $optionvalues['display'] ) ) {
-		wp_enqueue_style( 'animated-parakeet-fe--style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-fe.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
+		wp_enqueue_style( 'animated-parakeet-fe-style', ANIMIATED_PARAKEET_URL . 'assets/css/animated-parakeet-fe.css', array(), ANIMIATED_PARAKEET_VER, 'all' );
 		wp_enqueue_script( 'animated-parakeet-fe-script', ANIMIATED_PARAKEET_URL . 'assets/js/animated-parakeet-fe.min.js', array( 'jquery' ), ANIMIATED_PARAKEET_VER, true );
 		wp_localize_script(
 			'animated-parakeet-fe-script',
 			'apvars',
 			array(
 				'woo_cart_url' => wc_get_cart_url(),
-				'position'     => ( isset( $optionvalues['position'] ) ? 'bottom' : 'top' ),
-				'layout'       => ( isset( $optionvalues['layput'] ) ? 'background' : 'default' ),
-				'close'        => apply_filters( 'filter_animated_parakeet_close', ( isset( $optionvalues['close'] ) ? $optionvalues['close'] : '10' ) ),
+				'position'     => $optionvalues['position'],
+				'close'        => apply_filters( 'filter_animated_parakeet_close', $optionvalues['close'] ),
 			)
 		);
+		$custom_css = '';
+		if ( ! empty( $optionvalues['background'] ) || ! empty( $optionvalues['text'] ) ) {
+			$custom_css .= '#animated-parakeed-product-notice{';
+				if ( ! empty( $optionvalues['background'] ) ) { // phpcs:ignore
+					$custom_css .= 'background-color: ' . $optionvalues['background'] . ';';
+				} // phpcs:ignore
+
+				if ( ! empty( $optionvalues['text'] ) ) { // phpcs:ignore
+					$custom_css .= 'color: ' . $optionvalues['text'] . ';';
+				} // phpcs:ignore
+			$custom_css .= '}';
+		}
+		if ( ! empty( $optionvalues['buttonbkg'] ) || ! empty( $optionvalues['buttontext'] ) ) {
+			$custom_css .= '#animated-parakeed-product-notice .button{';
+				if ( ! empty( $optionvalues['buttonbkg'] ) ) { // phpcs:ignore
+					$custom_css .= 'background-color: ' . $optionvalues['buttonbkg'] . ';';
+				} // phpcs:ignore
+
+				if ( ! empty( $optionvalues['buttontext'] ) ) { // phpcs:ignore
+					$custom_css .= 'color: ' . $optionvalues['buttontext'] . ';';
+				} // phpcs:ignore
+			$custom_css .= '}';
+		}
+		if ( ! empty( $custom_css ) ) {
+			wp_add_inline_style( 'animated-parakeet-fe-style', $custom_css );
+		}
 	}
 }
 

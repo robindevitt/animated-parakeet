@@ -1,57 +1,5 @@
 #admin-animated-parakeet {
-	// Layout checkbox specific style.
-	.animated-parakeet-layout-checkbox {
-		input[type="checkbox"] {
-			width: 0px;
-			height: 0px;
-			padding: 0px;
-			border: 0px;
-			overflow: hidden;
-			margin: 0px;
-			min-width: 0px;
 
-			& + label {
-				font-size: 0px;
-
-				span {
-					display: block;
-					float: left;
-					width: 100px;
-					height: 69px;
-					background-size: 90%;
-					background-position: center;
-					background-repeat: no-repeat;
-					box-sizing: border-box;
-					margin-right: 10px;
-				}
-				.default {
-					background-image: url( '../images/default.png' );
-					background-color: #2271b1;
-					transition: all ease-in-out 0.3s;
-				}
-
-				.background {
-					background-image: url('../images/background.png');
-					background-color: transparent;
-					transition: all ease-in-out 0.3s;
-				}
-			}
-
-			&:checked + label {
-				.default {
-					color: inherit;
-					background-color: transparent;
-					transition: all ease-in-out 0.3s;
-				}
-
-				.background {
-					color: white;
-					background-color: #2271b1;
-					transition: all ease-in-out 0.3s;
-				}
-			}
-		}
-	}
 	// Position checkbox specific style.
 	.animated-parakeet-position-checkbox {
 		display: inline-block;
@@ -137,7 +85,7 @@
 				width: 100%;
 			}
 		}
-	}	
+	}
 
 	// Button style.
 	#add-condition {
